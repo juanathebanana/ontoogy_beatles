@@ -1,0 +1,752 @@
+@prefix : <http://www.semanticweb.org/juana/ontologies/2024/1/juana/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/juana/ontologies/2024/1/juana/> .
+
+<http://www.semanticweb.org/juana/ontologies/2024/1/juana> rdf:type owl:Ontology ;
+                                                            <http://purl.org/dc/elements/1.1/creator> "Juana Sofia Cruz Contento" ;
+                                                            <http://purl.org/dc/elements/1.1/date> "2024-02-19"^^xsd:date ;
+                                                            <http://purl.org/dc/elements/1.1/title> "Discography of Beatles"@en ,
+                                                                                                    "Discografia dei Beatles" ;
+                                                            rdfs:label "Music ontology"@en ,
+                                                                       "Ontologia musicale"@it .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+<http://purl.org/dc/elements/1.1/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/date
+<http://purl.org/dc/elements/1.1/date> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/title
+<http://purl.org/dc/elements/1.1/title> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/year
+:year rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/albumOf
+:albumOf rdf:type owl:ObjectProperty ;
+         owl:inverseOf :hasalbum ;
+         rdfs:domain :Album ;
+         rdfs:range [ rdf:type owl:Class ;
+                      owl:unionOf ( :MusicBand
+                                    :Person
+                                  )
+                    ] ;
+         rdfs:label "album of" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/bornin
+:bornin rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdfs:domain :Person ;
+        rdfs:range :City ;
+        rdfs:label "born in" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/deathPlace
+:deathPlace rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:domain :Person ;
+            rdfs:range :City ;
+            rdfs:label "death place" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/featuringwith
+:featuringwith rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( :MusicBand
+                                           :Person
+                                         )
+                           ] ;
+               rdfs:range [ rdf:type owl:Class ;
+                            owl:unionOf ( :MusicBand
+                                          :Person
+                                        )
+                          ] ;
+               rdfs:label "featuring with" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/hasalbum
+:hasalbum rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :MusicBand
+                                      :Person
+                                    )
+                      ] ;
+          rdfs:range :Album ;
+          rdfs:label "has album" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/hasgenre
+:hasgenre rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :Album
+                                      :Song
+                                    )
+                      ] ;
+          rdfs:range :Genre ;
+          rdfs:label "has genre" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/hasitem
+:hasitem rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         owl:inverseOf :inthealbum ;
+         rdfs:domain :Album ;
+         rdfs:range :Song ;
+         rdfs:label "has item" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/hasmember
+:hasmember rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :Album ;
+           rdfs:range :Person ;
+           rdfs:label "has member" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/inthealbum
+:inthealbum rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:domain :Song ;
+            rdfs:range :Album ;
+            rdfs:label "in the album" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/nexitem
+:nexitem rdf:type owl:ObjectProperty ;
+         owl:inverseOf :previousitem ;
+         rdfs:domain :Song ;
+         rdfs:range :Song ;
+         rdfs:label "next item" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/previousitem
+:previousitem rdf:type owl:ObjectProperty ;
+              rdfs:domain :Song ;
+              rdfs:range :Song ;
+              rdfs:label "previous item" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/songof
+:songof rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdfs:domain :Song ;
+        rdfs:range [ rdf:type owl:Class ;
+                     owl:unionOf ( :MusicBand
+                                   :Person
+                                 )
+                   ] ;
+        rdfs:label "song of" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/deathDate
+:deathDate rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Person ;
+           rdfs:range xsd:date ;
+           rdfs:label "death date" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/disbandedin
+:disbandedin rdf:type owl:DatatypeProperty ;
+             rdfs:domain :MusicBand ;
+             rdfs:range xsd:date ;
+             rdfs:label "disbanded in" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/foundedin
+:foundedin rdf:type owl:DatatypeProperty ;
+           rdfs:domain :MusicBand ;
+           rdfs:range xsd:date ;
+           rdfs:label "founded in" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/releasedate
+:releasedate rdf:type owl:DatatypeProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Album
+                                         :Song
+                                       )
+                         ] ;
+             rdfs:range xsd:date ;
+             rdfs:label "released date" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Album
+:Album rdf:type owl:Class ;
+       owl:equivalentClass [ rdf:type owl:Restriction ;
+                             owl:onProperty :hasitem ;
+                             owl:minQualifiedCardinality "4"^^xsd:nonNegativeInteger ;
+                             owl:onClass :Song
+                           ] ;
+       rdfs:subClassOf :Collections .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/BarbadosCity
+:BarbadosCity rdf:type owl:Class ;
+              rdfs:subClassOf :City .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/City
+:City rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Collections
+:Collections rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Female
+:Female rdf:type owl:Class ;
+        rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Genre
+:Genre rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Male
+:Male rdf:type owl:Class ;
+      rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/MusicBand
+:MusicBand rdf:type owl:Class ;
+           owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                        owl:onProperty :hasmember ;
+                                                        owl:allValuesFrom :Person
+                                                      ]
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty :hasmember ;
+                                                        owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                                        owl:onClass :Person
+                                                      ]
+                                                    ) ;
+                                 rdf:type owl:Class
+                               ] ;
+           rdfs:subClassOf :Collections .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Person
+:Person rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Song
+:Song rdf:type owl:Class ;
+      owl:equivalentClass [ rdf:type owl:Restriction ;
+                            owl:onProperty :songof ;
+                            owl:someValuesFrom [ rdf:type owl:Class ;
+                                                 owl:unionOf ( :MusicBand
+                                                               :Person
+                                                             )
+                                               ]
+                          ] .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/USAcity
+:USAcity rdf:type owl:Class ;
+         rdfs:subClassOf :City .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/UkCity
+:UkCity rdf:type owl:Class ;
+        rdfs:subClassOf :City .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana#Maxwell'sSilverHammer
+<http://www.semanticweb.org/juana/ontologies/2024/1/juana#Maxwell'sSilverHammer> rdf:type owl:NamedIndividual ,
+                                                                                          :Song ;
+                                                                                 owl:differentFrom :ComeTogether ;
+                                                                                 :inthealbum :AbbeyRoad ;
+                                                                                 :nexitem <http://www.semanticweb.org/juana/ontologies/2024/1/juana#Oh!Darling> ;
+                                                                                 :previousitem :Something ;
+                                                                                 :songof :TheBeatles ;
+                                                                                 rdfs:label "Maxwells Silver Hammer" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana#Oh!Darling
+<http://www.semanticweb.org/juana/ontologies/2024/1/juana#Oh!Darling> rdf:type owl:NamedIndividual ,
+                                                                               :Song ;
+                                                                      owl:differentFrom :ComeTogether ;
+                                                                      :inthealbum :AbbeyRoad ;
+                                                                      :nexitem :OctopusGarden ;
+                                                                      :previousitem <http://www.semanticweb.org/juana/ontologies/2024/1/juana#Maxwell'sSilverHammer> ;
+                                                                      :songof :TheBeatles ;
+                                                                      rdfs:label "Oh! Darling" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana#s&m
+<http://www.semanticweb.org/juana/ontologies/2024/1/juana#s&m> rdf:type owl:NamedIndividual ,
+                                                                        :Song ;
+                                                               :inthealbum :Loud ;
+                                                               :nexitem :whatsmyname ;
+                                                               :songof :Rihanna ;
+                                                               rdfs:label "S&M" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/AbbeyRoad
+:AbbeyRoad rdf:type owl:NamedIndividual ,
+                    :Album ;
+           owl:differentFrom :Loud ;
+           :albumOf :TheBeatles ;
+           :hasgenre :Rock ;
+           :hasitem <http://www.semanticweb.org/juana/ontologies/2024/1/juana#Maxwell'sSilverHammer> ,
+                    <http://www.semanticweb.org/juana/ontologies/2024/1/juana#Oh!Darling> ,
+                    :ComeTogether ,
+                    :IWantYou ,
+                    :OctopusGarden ,
+                    :Polythenepam ,
+                    :Something ,
+                    :because ,
+                    :carrythatweight ,
+                    :goldenslumbers ,
+                    :herecomesthesun ,
+                    :hermajesti ,
+                    :meanmrmustard ,
+                    :scibw ,
+                    :sunking ,
+                    :theend ,
+                    :younevergivemeyourmoney ;
+           :releasedate "1962"^^xsd:date ;
+           rdfs:label "Abbey Road"@en ;
+           rdfs:seeAlso "https://en.wikipedia.org/wiki/Abbey_Road" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Atlanta
+:Atlanta rdf:type owl:NamedIndividual ,
+                  :USAcity .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/ComeTogether
+:ComeTogether rdf:type owl:NamedIndividual ,
+                       :Song ;
+              owl:differentFrom :IWantYou ,
+                                :OctopusGarden ,
+                                :Something ;
+              :inthealbum :AbbeyRoad ;
+              :nexitem :Something ;
+              :songof :TheBeatles ;
+              rdfs:comment "Questa canzone fa parte dell'album Abbey Road"@it ,
+                           "This song is part of Abbey Road"@en ;
+              rdfs:label "Come together" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Complicated
+:Complicated rdf:type owl:NamedIndividual ,
+                      :Song ;
+             :inthealbum :Loud ;
+             :nexitem :skin ;
+             :previousitem :rainingmen ;
+             :songof :Rihanna ;
+             rdfs:label "Complicated" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/DancePop
+:DancePop rdf:type owl:NamedIndividual ,
+                   :Genre ;
+          rdfs:label "Dace Pop" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/FolkRock
+:FolkRock rdf:type owl:NamedIndividual ,
+                   :Genre ;
+          rdfs:label "Folk rock" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/FourFiveSeconds
+:FourFiveSeconds rdf:type owl:NamedIndividual ,
+                          :Song ;
+                 :hasgenre :FolkRock ;
+                 :songof :KanyeWest ,
+                         :PaulMcCartney ,
+                         :Rihanna .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/GeorgeHarrison
+:GeorgeHarrison rdf:type owl:NamedIndividual ,
+                         :Male ;
+                :bornin :Liverpool ;
+                rdfs:label "George Harrison" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/IWantYou
+:IWantYou rdf:type owl:NamedIndividual ,
+                   :Song ;
+          :inthealbum :AbbeyRoad ;
+          :nexitem :herecomesthesun ;
+          :previousitem :OctopusGarden ;
+          :songof :TheBeatles ;
+          rdfs:label "I want you" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/JohnLennon
+:JohnLennon rdf:type owl:NamedIndividual ,
+                     :Male ;
+            :bornin :Liverpool ;
+            :deathPlace :Newyork ;
+            :deathDate 1980 ;
+            rdfs:label "John Lennon" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/KanyeWest
+:KanyeWest rdf:type owl:NamedIndividual ,
+                    :Male ;
+           :bornin :Atlanta ;
+           :featuringwith :PaulMcCartney ,
+                          :Rihanna ;
+           rdfs:label "Kanye West" ;
+           rdfs:seeAlso "https://en.wikipedia.org/wiki/Kanye_West" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Liverpool
+:Liverpool rdf:type owl:NamedIndividual ,
+                    :UkCity ;
+           rdfs:label "Liverpool" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Loud
+:Loud rdf:type owl:NamedIndividual ,
+               :Album ;
+      :albumOf :Rihanna ;
+      :hasgenre :DancePop ;
+      :hasitem <http://www.semanticweb.org/juana/ontologies/2024/1/juana#s&m> ,
+               :Complicated ,
+               :californiakingbed ,
+               :cheers ,
+               :fading ,
+               :lovethewayyoulie ,
+               :mandown ,
+               :onlygirl ,
+               :rainingmen ,
+               :skin ,
+               :whatsmyname ;
+      :releasedate "2010"^^xsd:date .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Newyork
+:Newyork rdf:type owl:NamedIndividual ,
+                  :USAcity ;
+         rdfs:label "New York" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/OctopusGarden
+:OctopusGarden rdf:type owl:NamedIndividual ,
+                        :Song ;
+               :inthealbum :AbbeyRoad ;
+               :nexitem :IWantYou ;
+               :previousitem <http://www.semanticweb.org/juana/ontologies/2024/1/juana#Oh!Darling> ;
+               :songof :TheBeatles ;
+               rdfs:label "Octupus Garden" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/PaulMcCartney
+:PaulMcCartney rdf:type owl:NamedIndividual ,
+                        :Male ;
+               :bornin :Liverpool ;
+               rdfs:label "Paul McCartney" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Polythenepam
+:Polythenepam rdf:type owl:NamedIndividual ,
+                       :Song ;
+              :inthealbum :AbbeyRoad ;
+              :nexitem :scibw ;
+              :previousitem :meanmrmustard ;
+              :songof :TheBeatles ;
+              rdfs:label "Polythem pam" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/RIngoStar
+:RIngoStar rdf:type owl:NamedIndividual ,
+                    :Male ;
+           :bornin :Liverpool ;
+           rdfs:label "Ringo Star" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Rihanna
+:Rihanna rdf:type owl:NamedIndividual ,
+                  :Female ;
+         :bornin :SaintMichel ;
+         :featuringwith :PaulMcCartney ;
+         :hasalbum :Loud ;
+         rdfs:label "RIhanna" ;
+         rdfs:seeAlso "https://en.wikipedia.org/wiki/Rihanna" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Rock
+:Rock rdf:type owl:NamedIndividual ,
+               :Genre ;
+      rdfs:label "Rock" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/SaintMichel
+:SaintMichel rdf:type owl:NamedIndividual ,
+                      :BarbadosCity ;
+             rdfs:label "Saint Michel" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/Something
+:Something rdf:type owl:NamedIndividual ,
+                    :Song ;
+           :inthealbum :AbbeyRoad ;
+           :nexitem <http://www.semanticweb.org/juana/ontologies/2024/1/juana#Maxwell'sSilverHammer> ;
+           :previousitem :ComeTogether ;
+           :songof :TheBeatles ;
+           rdfs:label "Something" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/TheBeatles
+:TheBeatles rdf:type owl:NamedIndividual ,
+                     :MusicBand ;
+            :hasalbum :AbbeyRoad ;
+            :hasmember :GeorgeHarrison ,
+                       :JohnLennon ,
+                       :PaulMcCartney ,
+                       :RIngoStar ;
+            :disbandedin "1970"^^xsd:date ;
+            :foundedin "1960"^^xsd:date ;
+            rdfs:label "The Beatles" ;
+            rdfs:seeAlso "https://en.wikipedia.org/wiki/The_Beatles" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/because
+:because rdf:type owl:NamedIndividual ,
+                  :Song ;
+         :inthealbum :AbbeyRoad ;
+         :nexitem :younevergivemeyourmoney ;
+         :previousitem :herecomesthesun ;
+         :songof :TheBeatles ;
+         rdfs:label "Because" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/californiakingbed
+:californiakingbed rdf:type owl:NamedIndividual ,
+                            :Song ;
+                   :inthealbum :Loud ;
+                   :nexitem :mandown ;
+                   :previousitem :onlygirl ;
+                   :songof :Rihanna ;
+                   rdfs:label "California king bed" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/carrythatweight
+:carrythatweight rdf:type owl:NamedIndividual ,
+                          :Song ;
+                 :inthealbum :AbbeyRoad ;
+                 :nexitem :theend ;
+                 :previousitem :goldenslumbers ;
+                 :songof :TheBeatles ;
+                 rdfs:label "Carry that Weight" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/cheers
+:cheers rdf:type owl:NamedIndividual ,
+                 :Song ;
+        :inthealbum :Loud ;
+        :nexitem :fading ;
+        :previousitem :whatsmyname ;
+        :songof :Rihanna ;
+        rdfs:label "Cheers" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/fading
+:fading rdf:type owl:NamedIndividual ,
+                 :Song ;
+        :inthealbum :Loud ;
+        :nexitem :onlygirl ;
+        :previousitem :cheers ;
+        :songof :Rihanna ;
+        rdfs:label "Fading" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/goldenslumbers
+:goldenslumbers rdf:type owl:NamedIndividual ,
+                         :Song ;
+                :inthealbum :AbbeyRoad ;
+                :nexitem :carrythatweight ;
+                :previousitem :scibw ;
+                :songof :TheBeatles ;
+                rdfs:label "Golden Slumbers" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/herecomesthesun
+:herecomesthesun rdf:type owl:NamedIndividual ,
+                          :Song ;
+                 :inthealbum :AbbeyRoad ;
+                 :nexitem :because ;
+                 :previousitem :IWantYou ;
+                 :songof :TheBeatles ;
+                 rdfs:label "Here comes to sun" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/hermajesti
+:hermajesti rdf:type owl:NamedIndividual ,
+                     :Song ;
+            :inthealbum :AbbeyRoad ;
+            :previousitem :theend ;
+            :songof :TheBeatles ;
+            rdfs:comment "last song"@en ;
+            rdfs:label "Her Majesty" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/lovethewayyoulie
+:lovethewayyoulie rdf:type owl:NamedIndividual ,
+                           :Song ;
+                  :inthealbum :Loud ;
+                  :previousitem :skin ;
+                  :songof :Rihanna ;
+                  rdfs:label "Love the way you lie" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/mandown
+:mandown rdf:type owl:NamedIndividual ,
+                  :Song ;
+         :inthealbum :Loud ;
+         :nexitem :rainingmen ;
+         :previousitem :californiakingbed ;
+         :songof :Rihanna ;
+         rdfs:label "Man down" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/meanmrmustard
+:meanmrmustard rdf:type owl:NamedIndividual ,
+                        :Song ;
+               :inthealbum :AbbeyRoad ;
+               :nexitem :Polythenepam ;
+               :previousitem :sunking ;
+               :songof :TheBeatles ;
+               rdfs:label "Mean mr mustard" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/onlygirl
+:onlygirl rdf:type owl:NamedIndividual ,
+                   :Song ;
+          :inthealbum :Loud ;
+          :nexitem :californiakingbed ;
+          :previousitem :fading ;
+          :songof :Rihanna ;
+          rdfs:label "Only Girl" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/rainingmen
+:rainingmen rdf:type owl:NamedIndividual ,
+                     :Song ;
+            :inthealbum :Loud ;
+            :nexitem :Complicated ;
+            :previousitem :mandown ;
+            :songof :Rihanna ;
+            rdfs:label "Raining men" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/scibw
+:scibw rdf:type owl:NamedIndividual ,
+                :Song ;
+       :inthealbum :AbbeyRoad ;
+       :nexitem :goldenslumbers ;
+       :previousitem :Polythenepam ;
+       :songof :TheBeatles ;
+       rdfs:label "She Came In Through the Bathroom Window" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/skin
+:skin rdf:type owl:NamedIndividual ,
+               :Song ;
+      :inthealbum :Loud ;
+      :nexitem :lovethewayyoulie ;
+      :previousitem :Complicated ;
+      :songof :Rihanna ;
+      rdfs:label "Skin" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/sunking
+:sunking rdf:type owl:NamedIndividual ,
+                  :Song ;
+         :inthealbum :AbbeyRoad ;
+         :nexitem :meanmrmustard ;
+         :previousitem :younevergivemeyourmoney ;
+         :songof :TheBeatles ;
+         rdfs:label "Sun King" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/theend
+:theend rdf:type owl:NamedIndividual ,
+                 :Song ;
+        :inthealbum :AbbeyRoad ;
+        :nexitem :hermajesti ;
+        :previousitem :carrythatweight ;
+        :songof :TheBeatles ;
+        rdfs:label "The End" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/whatsmyname
+:whatsmyname rdf:type owl:NamedIndividual ,
+                      :Song ;
+             :inthealbum :Loud ;
+             :nexitem :cheers ;
+             :previousitem <http://www.semanticweb.org/juana/ontologies/2024/1/juana#s&m> ;
+             :songof :Rihanna ;
+             rdfs:label "Whats my name" .
+
+
+###  http://www.semanticweb.org/juana/ontologies/2024/1/juana/younevergivemeyourmoney
+:younevergivemeyourmoney rdf:type owl:NamedIndividual ,
+                                  :Song ;
+                         :inthealbum :AbbeyRoad ;
+                         :nexitem :sunking ;
+                         :previousitem :because ;
+                         :songof :TheBeatles ;
+                         rdfs:label "You never give me your money" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( <http://www.semanticweb.org/juana/ontologies/2024/1/juana#Maxwell'sSilverHammer>
+                        <http://www.semanticweb.org/juana/ontologies/2024/1/juana#Oh!Darling>
+                        :IWantYou
+                        :OctopusGarden
+                        :Something
+                      )
+] .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
